@@ -1,12 +1,12 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Concurrent;
 
 namespace jcDB.PCL {
     public class jcDBEntities {
-        private ImmutableDictionary<string, object> _database;
+        private ConcurrentDictionary<string, object> _database;
         private readonly jcDBFS _dbfs;
 
         public jcDBEntities(jcDBFS dbFS) {
-            _database = ImmutableDictionary<string, object>.Empty;
+            _database = new ConcurrentDictionary<string, object>();
 
             _dbfs = dbFS;
         }
@@ -24,7 +24,7 @@ namespace jcDB.PCL {
         }
 
         private string addObject(string key, object obj) {
-            _database = _database.Add(key, obj);
+            _database[key] = obj;
 
             return key;
         }
@@ -32,7 +32,7 @@ namespace jcDB.PCL {
         private void Delete(string key) {
             _database = _database.Remove(key);
         }
-
+        
         public T Get<T>(string key) {
             if (_database.ContainsKey(key)) {
                 return (T)_database[key];
