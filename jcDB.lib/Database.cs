@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
@@ -46,6 +47,11 @@ namespace jcDB.lib
         public void InsertFireAndForget(string key, object value)
         {
             _db[key] = value;
+        }
+
+        public void InsertBulk(Dictionary<string, object> data)
+        {
+            Parallel.ForEach(data.Keys, key => { _db[key] = data[key]; });
         }
 
         public async Task<bool> InsertAsync(string key, object value)
