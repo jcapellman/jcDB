@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+
 using jcDB.lib;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace jcDB.UnitTests
@@ -33,7 +34,7 @@ namespace jcDB.UnitTests
         [TestMethod]
         public void InsertTen()
         {
-            var data = Initialize(10);
+            var data = Initialize(1000);
 
             var start = DateTime.Now;
 
@@ -43,6 +44,20 @@ namespace jcDB.UnitTests
             {
                 db.InsertFireAndForget(key, data[key]);    
             }
+
+            Console.WriteLine(DateTime.Now.Subtract(start).TotalSeconds);
+        }
+
+        [TestMethod]
+        public void InsertTenBulk()
+        {
+            var data = Initialize(1000);
+
+            var start = DateTime.Now;
+
+            var db = new Database(PERF_DB_FILENAME);
+
+            db.InsertBulk(data);
 
             Console.WriteLine(DateTime.Now.Subtract(start).TotalSeconds);
         }
