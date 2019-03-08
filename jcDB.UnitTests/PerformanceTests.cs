@@ -59,26 +59,5 @@ namespace jcDB.UnitTests
 
             Assert.IsTrue(runSize == db.GetAll().Count);
         }
-
-        [DataTestMethod]
-        [DataRow(10)]
-        [DataRow(100)]
-        [DataRow(1000)]
-        [DataRow(10000)]
-        [DataRow(100000)]
-        public void InsertBulk(int runSize)
-        {
-            var data = Initialize(runSize);
-
-            var start = DateTime.Now;
-
-            var db = new Database(PERF_DB_FILENAME);
-
-            db.InsertBulk(data);
-
-            Console.WriteLine(DateTime.Now.Subtract(start).TotalSeconds);
-
-            Assert.IsTrue(runSize == db.GetAll().Count);
-        }
     }
 }

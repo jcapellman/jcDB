@@ -49,11 +49,6 @@ namespace jcDB.lib
             _db[key] = value;
         }
 
-        public void InsertBulk(Dictionary<string, object> data)
-        {
-            Parallel.ForEach(data.Keys, key => { _db[key] = data[key]; });
-        }
-
         public async Task<bool> InsertAsync(string key, object value)
         {
             await Task.Run(delegate { InsertFireAndForget(key, value); });
