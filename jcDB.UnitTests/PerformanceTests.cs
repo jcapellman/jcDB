@@ -19,6 +19,11 @@ namespace jcDB.UnitTests
 
             var dict = new Dictionary<string, object>();
 
+            for (var x = 0; x < dataSize; x++)
+            {
+                dict.Add(x.ToString(), x);
+            }
+
             return dict;
         }
 
@@ -31,10 +36,15 @@ namespace jcDB.UnitTests
             }
         }
 
-        [TestMethod]
-        public void InsertTen()
+        [DataTestMethod]
+        [DataRow(10)]
+        [DataRow(100)]
+        [DataRow(1000)]
+        [DataRow(10000)]
+        [DataRow(100000)]
+        public void Insert(int runSize)
         {
-            var data = Initialize(1000);
+            var data = Initialize(runSize);
 
             var start = DateTime.Now;
 
@@ -46,12 +56,19 @@ namespace jcDB.UnitTests
             }
 
             Console.WriteLine(DateTime.Now.Subtract(start).TotalSeconds);
+
+            Assert.IsTrue(runSize == db.GetAll().Count);
         }
 
-        [TestMethod]
-        public void InsertTenBulk()
+        [DataTestMethod]
+        [DataRow(10)]
+        [DataRow(100)]
+        [DataRow(1000)]
+        [DataRow(10000)]
+        [DataRow(100000)]
+        public void InsertBulk(int runSize)
         {
-            var data = Initialize(1000);
+            var data = Initialize(runSize);
 
             var start = DateTime.Now;
 
@@ -60,6 +77,8 @@ namespace jcDB.UnitTests
             db.InsertBulk(data);
 
             Console.WriteLine(DateTime.Now.Subtract(start).TotalSeconds);
+
+            Assert.IsTrue(runSize == db.GetAll().Count);
         }
     }
 }

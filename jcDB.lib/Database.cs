@@ -62,5 +62,7 @@ namespace jcDB.lib
         }
 
         public object Get(string key) => _db.ContainsKey(key) ? _db[key] : null;
+
+        public Dictionary<string, object> GetAll() => new Dictionary<string, object>(_db);
     }
 }
