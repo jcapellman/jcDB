@@ -58,5 +58,10 @@ namespace jcDB.lib
         public object Get(string key) => _db.ContainsKey(key) ? _db[key] : null;
 
         public Dictionary<string, object> GetAll() => _db;
+
+        public void Clear()
+        {
+            _db.Clear();
+        }
     }
 }
