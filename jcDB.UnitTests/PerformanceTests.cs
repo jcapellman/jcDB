@@ -50,9 +50,9 @@ namespace jcDB.UnitTests
 
             var db = new Database(true, PERF_DB_FILENAME);
 
-            foreach (var key in data.Keys)
+            foreach (var (key, value) in data)
             {
-                db.InsertFireAndForget(key, data[key]);    
+                db.InsertFireAndForget(key, value);    
             }
 
             Console.WriteLine(DateTime.Now.Subtract(start).TotalSeconds);
