@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 using jcDB.lib;
@@ -37,27 +38,31 @@ namespace jcDB.UnitTests
         }
 
         [DataTestMethod]
+        [DataRow(3)]
+        [DataRow(5)]
         [DataRow(10)]
-        [DataRow(100)]
-        [DataRow(1000)]
-        [DataRow(10000)]
-        [DataRow(100000)]
-        public void Insert(int runSize)
+        [DataRow(15)]
+        [DataRow(20)]
+        public void Insert(int TimeToRunSeconds)
         {
-            var data = Initialize(runSize);
+            var db = new Database();
 
-            var start = DateTime.Now;
+            var x = 0;
 
-            var db = new Database(true, PERF_DB_FILENAME);
+            var sw = new Stopwatch();
+            sw.Start();
 
-            foreach (var (key, value) in data)
+            while (sw.Elapsed < TimeSpan.FromSeconds(TimeToRunSeconds))
             {
-                db.InsertFireAndForget(key, value);    
+                db.InsertFireAndForget(x.ToString(), x);
+                x++;
             }
 
-            Console.WriteLine(DateTime.Now.Subtract(start).TotalSeconds);
+            sw.Stop();
 
-            Assert.IsTrue(runSize == db.GetAll().Count);
+            Console.WriteLine($"Throughput {x/TimeToRunSeconds}/s");
+
+            Assert.IsTrue(x > TimeToRunSeconds * 10);
         }
     }
 }
