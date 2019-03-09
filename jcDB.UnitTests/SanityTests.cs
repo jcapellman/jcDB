@@ -60,7 +60,7 @@ namespace jcDB.UnitTests
             var key = "testkey";
             var val = "testval";
 
-            var db = new Database(DB_FILENAME, 1);
+            var db = new Database(true, DB_FILENAME, 1);
 
             var insertResult = await db.InsertAsync(key, val);
 

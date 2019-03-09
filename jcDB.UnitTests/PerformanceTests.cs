@@ -48,7 +48,7 @@ namespace jcDB.UnitTests
 
             var start = DateTime.Now;
 
-            var db = new Database(PERF_DB_FILENAME);
+            var db = new Database(true, PERF_DB_FILENAME);
 
             foreach (var key in data.Keys)
             {

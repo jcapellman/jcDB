@@ -16,12 +16,12 @@ namespace jcDB.lib
 
         private readonly BackgroundWorker _flushWorker;
 
-        public Database(string flushFileName = null, int intervalToPurgeSeconds = Common.Constants.INTERVAL_TO_PURGE_SECONDS)
+        public Database(bool persist = false, string flushFileName = null, int intervalToPurgeSeconds = Common.Constants.INTERVAL_TO_PURGE_SECONDS)
         {
             _flushFileName = flushFileName;
             _intervalToPurgeSeconds = intervalToPurgeSeconds;
 
-            if (string.IsNullOrEmpty(flushFileName))
+            if (!persist)
             {
                 return;
             }
