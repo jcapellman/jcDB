@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
@@ -12,7 +11,7 @@ namespace jcDB.lib
         private readonly string _flushFileName;
         private readonly int _intervalToPurgeSeconds;
 
-        private static ConcurrentDictionary<string, object> _db = new ConcurrentDictionary<string, object>();
+        private static Dictionary<string, object> _db = new Dictionary<string, object>();
 
         private readonly BackgroundWorker _flushWorker;
 
@@ -58,6 +57,6 @@ namespace jcDB.lib
 
         public object Get(string key) => _db.ContainsKey(key) ? _db[key] : null;
 
-        public Dictionary<string, object> GetAll() => new Dictionary<string, object>(_db);
+        public Dictionary<string, object> GetAll() => _db;
     }
 }
