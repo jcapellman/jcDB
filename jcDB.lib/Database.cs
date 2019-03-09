@@ -40,7 +40,7 @@ namespace jcDB.lib
 
         private void _flushWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            File.WriteAllText(_flushFileName, Newtonsoft.Json.JsonConvert.SerializeObject(_db));
+            Flush();
         }
 
         public void InsertFireAndForget(string key, object value)
@@ -62,6 +62,11 @@ namespace jcDB.lib
         public void Clear()
         {
             _db.Clear();
+        }
+
+        public void Flush()
+        {
+            File.WriteAllText(_flushFileName, Newtonsoft.Json.JsonConvert.SerializeObject(_db));
         }
     }
 }
