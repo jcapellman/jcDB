@@ -45,12 +45,17 @@ namespace jcDB.lib
 
         public void InsertFireAndForget(string key, object value)
         {
+            Task.Run(() => Insert(key, value));
+        }
+
+        private static void Insert(string key, object value)
+        {
             _db[key] = value;
         }
 
         public async Task<bool> InsertAsync(string key, object value)
         {
-            await Task.Run(delegate { InsertFireAndForget(key, value); });
+            await Task.Run(delegate { Insert(key, value); });
 
             return true;
         }
