@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -63,6 +64,8 @@ namespace jcDB.lib
         public object Get(string key) => _db.ContainsKey(key) ? _db[key] : null;
 
         public Dictionary<string, object> GetAll() => _db;
+
+        public Dictionary<string, object> Get(List<string> keys) => new Dictionary<string, object>(_db.Where(a => keys.Contains(a.Key)));
 
         public void Clear()
         {
